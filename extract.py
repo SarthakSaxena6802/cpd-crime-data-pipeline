@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from prefect import task
 from sodapy import Socrata
 
-load_dotenv()  # reads settings from a .env file if one exists (we'll create it in Step 3)
+load_dotenv()  # reads settings from a .env file if one exists
 
 DOMAIN = "data.cambridgema.gov"
 DATASET_ID = "3gki-wyrb"
