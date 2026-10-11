@@ -1,0 +1,9 @@
+# Python virtual environment and cache
+.venv/
+__pycache__/
+
+# Secrets
+.env
+
+# Local test database
+*.db
