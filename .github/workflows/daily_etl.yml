@@ -1,0 +1,30 @@
+name: Daily ETL
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # every day at 06:00 UTC (2 AM in Cambridge, 11:30 AM in India)
+  workflow_dispatch:       # adds a "Run workflow" button for manual runs
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ETL pipeline
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SOCRATA_APP_TOKEN: ${{ secrets.SOCRATA_APP_TOKEN }}
+          PREFECT_SERVER_ANALYTICS_ENABLED: "false"
+        run: python etl_pipeline.py
